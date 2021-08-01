@@ -5,71 +5,24 @@ import {
   View,
   StyleSheet,
 } from "react-native";
-import { IconButton, Colors } from 'react-native-paper';
 import GoalItem from "../components/GoalItem";
 import GoalInput from "../components/GoalInput";
-import Realm from "realm";
-import { createTodo, deleteTodo, todosGet, highestIdLookup } from "../api/apiRequests";
-
-// import firebase from '@react-native-firebase/app';
 import firestore from '@react-native-firebase/firestore';
-
-
-
 
 const date = new Date().getDate(); //To get the Current Date
 const month = new Date().getMonth() + 1; //To get the Current Month
 const year = new Date().getFullYear(); //To get the Current Year
 
-// const windowHeight = Dimensions.get("window").height;
 const windowsWidth = Dimensions.get("window").width;
 
 export default function TodoScreen() {
 
   const ref = firestore().collection('todos');
 
-  // const [ todo, setTodo ] = useState('');
   const [todos, setTodos] = useState([]);
   const [title, setTitle] = useState("");
-  const [highestId, setHighestId] = useState(0)
-  const [highestIdFromServer, setHighestIdFromServer] = useState(null)
 
-  async function getTodos() {
-    const realm = await Realm.open({
-      path: "todos",
-      schema: [TaskSchema],
-    });
 
-    return realm.objects("Task");
-
-  }
-
-  async function addTodo() {
-    console.log(title)
-    await ref.add({
-      title: title,
-      date: date, 
-      month: month,
-      year: year
-    });
-    // setTitle('');
-  }
-
-  // const pullFromServer = () => {
-  //   highestIdLookup().then(res => res.json())
-  //     .then(response => setHighestIdFromServer(response['id']))
-  // }
-
-  // async function realmCreate(obj) {
-  //   const realm = await Realm.open({
-  //     path: "todos",
-  //     schema: [TaskSchema],
-  //   });
-  //   realm.write(() => {
-  //     realm.create("Task", obj);
-  //   });
-  // }
-  
   useEffect(() => {
     return ref.onSnapshot(querySnapshot => {
       const list = [];
@@ -88,76 +41,18 @@ export default function TodoScreen() {
     });
   }, []);
 
-
-  const TaskSchema = {
-    name: "Task",
-    properties: {
-      _id: "int",
-      title: "string",
-      date: "int",
-      month: "int",
-      year: "int",
-    },
-    primaryKey: "_id",
-  };
-
   async function pressHandler(title) {
-    setTitle(title);
-    const realm = await Realm.open({
-      path: "todos",
-      schema: [TaskSchema],
+    await ref.add({
+      title: title,
+      date: date, 
+      month: month,
+      year: year
     });
-
-    const lastTask = realm.objects("Task").sorted("_id", true)[0];
-    const highestId = lastTask == null ? 0 : lastTask._id + 1;
-
-    realm.write(() => {
-      realm.create("Task", {
-        _id: highestId,
-        title: title,
-        date: date,
-        month: month,
-        year: year,
-      });
-    });
-    // pullFromServer()
-
-  //   try{
-  //     createTodo({ highestId, title, date, month, year })
-  //   }
-  //   catch(err) {
-  //     if (err) {
-  //       deleteHandler(highestIdFromServer)
-  //     }
-  //   }
-console.log(title)
-  await ref.add({
-    title: title,
-    date: date, 
-    month: month,
-    year: year
-  });
-
   }
 
   async function deleteHandler(id) {
-
-    setTodos(todos.filter(r => r._id !== id));
-
-    const realm = await Realm.open({
-      path: "todos",
-      schema: [TaskSchema],
-    });
-
-    realm.write(() => {
-      const taskTodelete = realm.objects("Task").filtered(`_id==${id}`);
-      realm.delete(taskTodelete);
-    });
-    deleteTodo(id);
-    // pullFromServer()
-
+     await firestore().collection("todos").doc(id).delete()
   }
-
 
   return (
     <View style={styles.background} onPress={Keyboard.dismiss}>
@@ -167,14 +62,7 @@ console.log(title)
         </View>
       </View>
       <View style={styles.inputContainer}>
-      {/* <View style={{alignSelf: 'flex-end', marginRight: 10}}>
-      <IconButton
-        icon="refresh"
-        color="white"
-        size={35}
-        onPress={pullFromServer}
-      />
-      </View> */}
+
         <GoalInput addHandler={pressHandler} />
       </View>
     </View>

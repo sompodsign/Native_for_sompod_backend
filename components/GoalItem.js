@@ -28,7 +28,7 @@ let maxHeight = keyboard.keyboardShown ? windowHeight - (keyboard.keyboardHeight
             subtitleStyle={{ color: "#EEEEEE" }}
             left={(props) => <Avatar.Icon size={35} icon='calendar-check'/>}
             right={(props) => (
-              <IconButton {...props} color="white" icon="check" onPress={() => deleteItem(item._id)} />
+              <IconButton {...props} color="white" icon="check" onPress={() => deleteItem(item.id)} />
             )}
           />
         </Card>
