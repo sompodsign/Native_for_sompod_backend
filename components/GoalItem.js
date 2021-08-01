@@ -14,7 +14,7 @@ let maxHeight = keyboard.keyboardShown ? windowHeight - (keyboard.keyboardHeight
     <View>
     <FlatList
       style={{maxHeight: maxHeight}}
-      keyExtractor={(item) => item._id.toString()}
+      keyExtractor={(item) => item.id}
       data={items}
       renderItem={({ item }) => (
         <Card

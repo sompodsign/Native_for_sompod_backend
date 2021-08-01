@@ -71,19 +71,22 @@ export default function TodoScreen() {
   // }
   
   useEffect(() => {
-    // pullFromServer()
-    getTodos().then(r => setTodos(r));
-    // todosGet().then(resp => resp.json())
-    //   .then(response => {
-    //     const arr = todos.map(t1 => (response.filter(t2 => {
-    //       return (t2['_id'] !== t1['_id'])
-    // })))
-    
-    // console.log("not in todos", arr[1])
-      // }
-        // )
-        // getTodos().then(r => setTodos(r));
-  }, [title, highestId]);
+    return ref.onSnapshot(querySnapshot => {
+      const list = [];
+      querySnapshot.forEach(doc => {
+        const { title, date, month, year } = doc.data();
+        list.push({
+          id: doc.id,
+          title,
+          date,
+          month,
+          year
+        });
+      });
+
+      setTodos(list);
+    });
+  }, []);
 
 
   const TaskSchema = {
