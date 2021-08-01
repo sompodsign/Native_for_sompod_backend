@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "383952530965",
+    "project_id": "todorin-32847",
+    "storage_bucket": "todorin-32847.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383952530965:android:6572411c767cf5d04f681c",
+        "android_client_info": {
+          "package_name": "com.cnq.sompod"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "383952530965-f1p0vvfe2ls4alhtnsicloolod7bbfq5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6nPGCEZ-gkZ3GghjX7y7cv2hv61u2Zjw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "383952530965-f1p0vvfe2ls4alhtnsicloolod7bbfq5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -10,6 +10,13 @@ import GoalItem from "../components/GoalItem";
 import GoalInput from "../components/GoalInput";
 import Realm from "realm";
 import { createTodo, deleteTodo, todosGet, highestIdLookup } from "../api/apiRequests";
+
+// import firebase from '@react-native-firebase/app';
+import firestore from '@react-native-firebase/firestore';
+
+
+
+
 const date = new Date().getDate(); //To get the Current Date
 const month = new Date().getMonth() + 1; //To get the Current Month
 const year = new Date().getFullYear(); //To get the Current Year
@@ -19,6 +26,9 @@ const windowsWidth = Dimensions.get("window").width;
 
 export default function TodoScreen() {
 
+  const ref = firestore().collection('todos');
+
+  // const [ todo, setTodo ] = useState('');
   const [todos, setTodos] = useState([]);
   const [title, setTitle] = useState("");
   const [highestId, setHighestId] = useState(0)
@@ -32,6 +42,17 @@ export default function TodoScreen() {
 
     return realm.objects("Task");
 
+  }
+
+  async function addTodo() {
+    console.log(title)
+    await ref.add({
+      title: title,
+      date: date, 
+      month: month,
+      year: year
+    });
+    // setTitle('');
   }
 
   // const pullFromServer = () => {
@@ -86,7 +107,6 @@ export default function TodoScreen() {
 
     const lastTask = realm.objects("Task").sorted("_id", true)[0];
     const highestId = lastTask == null ? 0 : lastTask._id + 1;
-    // setHighestId(highestIdFromServer)
 
     realm.write(() => {
       realm.create("Task", {
@@ -107,6 +127,13 @@ export default function TodoScreen() {
   //       deleteHandler(highestIdFromServer)
   //     }
   //   }
+console.log(title)
+  await ref.add({
+    title: title,
+    date: date, 
+    month: month,
+    year: year
+  });
 
   }
 

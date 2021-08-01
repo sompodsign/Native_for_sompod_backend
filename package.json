@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@react-native-community/hooks": "^2.6.0",
+    "@react-native-firebase/app": "^12.4.0",
+    "@react-native-firebase/firestore": "^12.4.0",
     "lodash": "^4.17.21",
     "react": "17.0.1",
     "react-native": "0.64.2",

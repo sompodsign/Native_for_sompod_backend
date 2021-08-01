@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 import { TextInput } from "react-native-paper";
 
+
+
+
 const GoalInput = ({ addHandler }) => {
+
+
   const [title, setTitle] = useState("");
 
   const pressHandler = (title) => {
